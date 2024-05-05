@@ -8,6 +8,10 @@
 *.so
 *.dylib
 
+# db
+*.sqlite3
+*.db
+
 # Test binary, built with `go test -c`
 *.test
 
