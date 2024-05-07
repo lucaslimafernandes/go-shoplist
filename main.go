@@ -33,6 +33,7 @@ func main() {
 	}
 
 	// lucas_time()
+	l()
 
 	// window.CreateList(w)
 	window.Home(w)
@@ -51,4 +52,24 @@ func lucas_time() {
 	// 02: Representa o dia do mês com zero à esquerda, se necessário, para ter dois dígitos (por exemplo, "01", "02", ..., "31").
 	// 01: Representa o mês com zero à esquerda, se necessário, para ter dois dígitos (por exemplo, "01" para janeiro, "02" para fevereiro, ..., "12" para dezembro).
 	// 2006: Representa o ano com quatro dígitos (por exemplo, "2006", "1999", "2023", etc.).
+}
+
+func l() {
+
+	var item models.Item
+	var listas models.List_ofLists
+	var listas_nomes []string
+	listas.ListAll()
+
+	for _, n := range listas {
+		fmt.Println("add", n.Nome)
+		listas_nomes = append(listas_nomes, n.Nome)
+	}
+
+	log.Println(listas)
+	log.Println(listas_nomes)
+
+	item.Item = "nome"
+	log.Println(item)
+
 }

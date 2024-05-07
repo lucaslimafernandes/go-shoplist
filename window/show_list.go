@@ -22,7 +22,11 @@ func ShowList(w fyne.Window) *widget.Form {
 	// var btns []*widget.Button
 	var btns []fyne.CanvasObject
 	for _, v := range lists {
-		temp := widget.NewButton(v.Nome, func() { log.Println("clicou", v.Nome) })
+		temp := widget.NewButton(v.Nome, func() {
+			log.Println("clicou", v.Nome)
+			res := PageItems(w, v)
+			w.SetContent(res)
+		})
 		btns = append(btns, temp)
 	}
 
