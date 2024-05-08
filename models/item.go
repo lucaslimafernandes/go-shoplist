@@ -109,3 +109,20 @@ func (li *List_ofItems) ListItems(l_id int) error {
 	return rows.Err()
 
 }
+
+func (i *Item) GetItem(iid int) error {
+
+	var item Item
+	row, err := Db.Query("SELECT id, lista, item, valor, qtd, dt_insert, status FROM item WHERE id = ?", iid)
+	if err != nil {
+		log.Println("erro getitem:", err)
+	}
+	defer row.Close()
+
+	for row.Next() {
+		row.Scan(&item.ID, &item.Lista, &item.Item, &item.Valor, &item.Qtd, &item.Dt_insert, &item.Status)
+	}
+
+	return err
+
+}

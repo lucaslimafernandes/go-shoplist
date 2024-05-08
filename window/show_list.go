@@ -24,8 +24,30 @@ func ShowList(w fyne.Window) *widget.Form {
 	for _, v := range lists {
 		temp := widget.NewButton(v.Nome, func() {
 			log.Println("clicou", v.Nome)
-			res := PageItems(w, v)
-			w.SetContent(res)
+			res, ed_call := PageItems(w, v)
+			btn_home := widget.NewButton("Voltar", func() { Home(w) })
+			// btn_edit := widget.NewButton("Editar", func() {
+			// 	res.OnSelected = func(id widget.TableCellID) {
+			// 		log.Printf("Selected: %v\n", id.Row)
+			// 		if id.Row > 0 { // Ignore header row
+			// 			// fmt.Printf("Selected: %s\n", data[id.Row][id.Col])
+			// 			fmt.Printf("Selected: %v\n", id.Row)
+			// 			// Implement your edit logic here
+			// 		}
+			// 	}
+			// })
+			btn_edit := widget.NewButton("Editar", func() { ed_call() })
+			// Cria um contêiner de grade para os botões
+			// gridLayout := layout.NewGridLayoutWithRows(1) // Define o layout de grade com uma coluna
+			gridLayout := layout.NewGridLayoutWithColumns(1) // Define o layout de grade com uma coluna
+
+			gridContainer := container.New(gridLayout,
+				res,
+				btn_home,
+				btn_edit,
+			)
+			// w.SetContent(res)
+			w.SetContent(gridContainer)
 		})
 		btns = append(btns, temp)
 	}

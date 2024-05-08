@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"go-shoplist/models"
 	"log"
+	"strconv"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/widget"
 )
 
-func PageItems(w fyne.Window, l models.List) *widget.Table {
+// func PageItems(w fyne.Window, l models.List) *widget.Table {
+func PageItems(w fyne.Window, l models.List) (*widget.Table, func()) {
 
 	// var btns []fyne.CanvasObject
 
@@ -70,12 +72,40 @@ func PageItems(w fyne.Window, l models.List) *widget.Table {
 		},
 	)
 
+	// rs := 0
 	list.OnSelected = func(id widget.TableCellID) {
 		if id.Row > 0 { // Ignore header row
 			fmt.Printf("Selected: %s\n", data[id.Row][id.Col])
+			// rs, _ = strconv.Atoi(data[id.Row][0])
 			// Implement your edit logic here
 		}
 	}
+
+	// Função de callback para btn_edit
+	// editCallback := func(listID int) int {
+
+	editCallback := func() {
+		var rs int
+		list.OnSelected = func(id widget.TableCellID) {
+			if id.Row > 0 { // Ignore header row
+				log.Printf("Selected: %s\n", data[id.Row][id.Col])
+				rs, _ = strconv.Atoi(data[id.Row][0])
+				// Implemente sua lógica de edição aqui usando o ID da lista
+				log.Printf("ID: %v", rs)
+				EditItem(w, rs)
+			}
+		}
+	}
+
+	// gridLayout := layout.NewGridLayoutWithColumns(1) // Define o layout de grade com uma coluna
+	// gridLayout := layout.NewGridLayoutWithRows(10) // Define o layout de grade com uma coluna
+
+	// btn := widget.NewButton("TEXT", func() { Home(w) })
+	// // Cria um contêiner de grade para os botões
+	// gridContainer := container.New(gridLayout,
+	// 	list,
+	// 	btn,
+	// )
 
 	// list.OnUnselected = func(id widget.TableCellID) {
 	// 	if id.Row > 0 { // Ignore header row
@@ -99,6 +129,7 @@ func PageItems(w fyne.Window, l models.List) *widget.Table {
 	// 	container.NewVScroll(container.NewVBox(btns...)), // Lista de botões dentro de um contêiner de rolagem vertical
 	// )
 	// log.Println(gridContainer)
-	return list
+	return list, editCallback
+	// return gridContainer
 
 }
